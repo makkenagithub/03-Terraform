@@ -31,14 +31,14 @@ resource "aws_security_group" "allow_ssh" {
 
 resource "aws_instance" "terraform" {
 
-    count = 3   # it creates 3 servers
+    count = len(var.instance_names)   # it creates servers based on length of instance names.
 
     ami = "ami-09c813fb71547fc4f"
     instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
     tags = {
-        Name = var.instance_type[count.index]   #we have count.index in terraform
+        Name = var.instance_names[count.index]   #we have count.index in terraform
     }
 
 }
