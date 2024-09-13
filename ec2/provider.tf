@@ -8,4 +8,10 @@ terraform {
     
 }
 
+provider "aws" {
+    # configuration oprtions
+    region = "us-east-1"
+}
+
+
 
