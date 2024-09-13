@@ -65,3 +65,65 @@ apply -auto-approve: It doesnot ask for approavl. It creates the resources.
 terraform apply -auto-approve
 ```
 
+Variables: string, number, list, boolean
+
+```
+variable "var_name" {
+  default = "Suresh"
+  type = string
+description = "name of person"
+}
+```
+
+terraform.tfvars: using this file we can overwrite the default values in variables or else we can set the values. We give variables as below in terraform.tfvars
+```
+instance_type = t2.micro
+```
+Preference is given the values in .tfvars file when compared to default values.
+
+Variables can be passed in command line, terraform.tfvars, default, environment variables.
+
+syntax for environment variable is 
+```
+export TF_VAR_instance_type=t3.large
+```
+Variable preference is 
+
+1. command line
+2. terraform.tfvars
+3. environment variables
+4. default
+
+If we do not give variables any where, it will ask to enter value while running.
+
+Conditions:
+
+syntax is 
+```
+condition ? true_val : false_val
+```
+Eg:
+
+A common use of conditional expressions is to define defaults to replace invalid values:
+```
+var.a != "" ? var.a : "default-a"
+```
+If var.a is an empty string then the result is "default-a", but otherwise it is the actual value of var.a.
+
+Outputs:
+
+Every resource exports some values, we can take them and create other resources based on that
+
+loops:
+1. count based loops
+2. for or for each
+
+Functions:
+
+Terraform has no custom functions. We must use in-built functions
+
+To goto terraform console/prompt
+```
+terramform console
+```
+
