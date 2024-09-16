@@ -1,5 +1,5 @@
 variable "ingress_rules" {
-    type = map
+
     default = [
     {
         from_port = 22
