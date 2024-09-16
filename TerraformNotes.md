@@ -175,6 +175,51 @@ locking -> dynamo DB. When creating dynamoDB, partition key must be LockID
 
 terraform locking: 
 
+lock file is there to make sure the infra is not running parellely by other users.
+
+
+for each loop:
+
+for each is used to iterate maps. count loop is used to iterate list.
+
+The output is stored in the form of maps. For count based loop, the output is stored in the form of list. We need to identify this reference.
+
+dynamic block:
+refer to example.
+
+Provisioners:
+
+provisioners are used to take some actons locally or remotely
+
+provisioner for local execution.
+```
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo The server's IP address is ${self.private_ip}"
+  }
+}
+```
+
+provisioner for remote exec
+```
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
+  }
+```
+
+
 
 
 
