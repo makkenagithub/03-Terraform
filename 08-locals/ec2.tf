@@ -31,7 +31,7 @@ resource "aws_security_group" "allow_ssh" {
 
 resource "aws_instance" "terraform" {
     ami = "ami-09c813fb71547fc4f"
-    instance_type = var.environment == "prod" ? "t3.micro" : "t2.micro"
+    instance_type = local.instance_type
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
     tags = {
