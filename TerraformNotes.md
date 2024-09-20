@@ -219,9 +219,78 @@ provisioner for remote exec
   }
 ```
 
+Consistent infra across all environments:
+
+1. using tfvars
+2. using terraform workspaces
+3. using separate repos for environments
+
+tfvars:
+
+tfvars file overwrites the default variables
+
+eg:
+
+dev.tfvars for dev env
+
+prod.tfvars for prod env
+
+we define s3 and dynamo db in backend block in profider files.
+Instead of using same S3 bucket and different keys for all environments, Its always better to use different S3 buckets for different environments.
+
+startswith and endswith functions:
+
+read startswith and endswith function, sometime they are useful in conditional statements 
 
 
+Workspaces:
 
+In workspaces, we do not need to create different S3 buckets. It takes care by terraform. When we create a workspace, it creates workspace specific folder in the S3 bucket.
+
+To see list of workspaces:
+```
+terraform workspace list
+```
+To create new workspace:
+```
+terraform workspace new dev
+terraform workspace new prod
+```
+To delete workspace
+```
+terraform workspace delete dev
+```
+To select a workspace:
+```
+terraform workspace select default
+```
+TO see which workspace we are in 
+```
+terraform workspace show
+```
+when we use workspaces, terraform gives a variable terraform.workspace and it value is the name of workspace currently we are in.
+
+Adv:
+
+code reuse
+
+dis adv:
+
+1. easy to make errors.
+2. not easy to implement.
+3. changes made can effect all envs
+
+Seperate code for separate env:
+
+Its better to go for sepeate code for separate envs. But the disadvantage is duplicated code.
+
+Module development:
+
+Smilar to functions, we call functions some inputs and it gves us some output. Similar to functions we create modules and reuse them in terraform
+
+Write code once and call them many times.
+
+Modules - resource definitions and arguments are same. Only values are different
 
 
 
