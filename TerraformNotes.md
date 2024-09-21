@@ -292,5 +292,12 @@ Write code once and call them many times.
 
 Modules - resource definitions and arguments are same. Only values are different
 
+advantages of modules:
+1. code reuse
+2. best practices can be enforced.
+3. you can restrict user using few options as per standards
+
+
+
 
 
