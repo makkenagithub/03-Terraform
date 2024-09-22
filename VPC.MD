@@ -53,7 +53,7 @@ NAT (network address translation) :
 
 When we call a command dnf install mysql-server in DB servers (private subnet servers), the request goes to internet and installs the mysql server. But the traffic is outgoing which allowd through a gateway called NAT gateway.
 
-NAT is the mechanism private servers connect to internet for outgoing traffic lke packages installation, security patches download etc
+NAT is the mechanism private servers connect to internet for outgoing traffic like packages installation, security patches download etc
 
 NAT - when server stops and starts IP address wll change. It should have same IP always (statc IP / elastic IP)
 
@@ -64,5 +64,15 @@ Create  NAT gateway. Give a name and select  the public subnet. Connection type 
 Edit the private (backend and DB) route tables. Edit routes -> Add route -> 0.0.0.0/0 -> NAT gateway -> select the above created NAT gateway.
 
 
+High Availability:
 
+If our servers available in multiple availablty zones (us-east-1a, us-east-1b) , then its high availability. But its not DR.
+
+If our servers exists in multiple regions , then its DR
+
+We cant create servers without subnet. So we have to create 
+
+1. 1 public (forontend) subnet in us-east-1a , 1 public (forontend) subnet in us-east-1b
+2. 1 private (backend) subnet in us-east-1a , 1 private (backend) subnet in us-east-1b
+3. 1 private (DB) subnet in us-east-1a , 1 private (DB) subnet in us-east-1b
 
