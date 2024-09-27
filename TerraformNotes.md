@@ -298,6 +298,22 @@ advantages of modules:
 3. you can restrict user using few options as per standards
 
 
+Terraform Naming conventions:
+
+1. use _, lower case letters and numbers
+2. do not repeat resource type in name
+3. if only one resource of its type, then name it as main / this. (eg: one VPC or one NAT gateway, then use this/main)
+4. use plurals if multiple resources
+5. Include count / for_each as the first argument inside the resource / data source - for better readability
+6. Include tags , depends on and lifecycle as last argumnets in resource
+7. when using conditions in an argument count / for_each , prefer boolean values instead of length or other expressions
+
+
+If we change the provider.tf, then we need reconfigure the init
+```
+terraform init -reconfigure
+```
+
 
 
 
