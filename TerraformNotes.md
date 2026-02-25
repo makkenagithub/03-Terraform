@@ -314,6 +314,29 @@ If we change the provider.tf, then we need reconfigure the init
 terraform init -reconfigure
 ```
 
+### terraform taint, untaint and replace:
 
+Why Use terraform taint?
+You use taint when:
+A resource is partially broken
+A provisioner failed
+Manual changes corrupted the resource
+You want to force recreation without editing code
 
+```
+terraform taint <resource_address>
+terraform taint aws_instance.web
+Resource instance aws_instance.web has been marked as tainted.
+terraform apply
+```
+
+```
+terraform untaint <resource_address>
+terraform untaint aws_instance.web
+```
+
+As of Terraform 0.15+, terraform taint is deprecated. Instead use replace
+```
+terraform apply -replace="aws_instance.web"
+```
 
