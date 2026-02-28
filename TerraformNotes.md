@@ -340,3 +340,69 @@ As of Terraform 0.15+, terraform taint is deprecated. Instead use replace
 terraform apply -replace="aws_instance.web"
 ```
 
+### terraform precondirion, postcondition, checks :
+https://developer.hashicorp.com/terraform/language/validate
+
+Terraform evaluates preconditions on resources, data sources, and outputs when Terraform creates a plan. 
+
+if the precondition fails Terraform throws an error with the error_message argument and stops the current operation.
+
+```
+resource "aws_instance" "example" {
+  instance_type = "t3.micro"
+  ami           = data.aws_ami.example.id
+
+  lifecycle {
+    # The AMI ID must refer to an AMI that contains an operating system
+    # for the `x86_64` architecture.
+    precondition {
+      condition     = data.aws_ami.example.architecture == "x86_64"
+      error_message = "The selected AMI must be for the x86_64 architecture."
+    }
+  }
+}
+
+```
+
+
+Terraform evaluates postcondition blocks after planning and applying changes to a resource, or after reading from a data source.
+```
+data "aws_ami" "example" {
+  executable_users = ["self"]
+  most_recent      = true
+  owners           = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["myami-*"]
+  }
+
+  lifecycle {
+    # The AMI ID must refer to an existing AMI that has the tag "nomad-server".
+    postcondition {
+      condition     = self.tags["Component"] == "nomad-server"
+      error_message = "tags[\"Component\"] must be \"nomad-server\"."
+    }
+  }
+}
+
+```
+
+If the postcondition fails, Terraform throws an error with the error_message argument and stops the current operation.
+
+
+The check block executes as the last step of plan or apply operation, after Terraform has planned or provisioned your infrastructure. When a check block's assertion fails, Terraform reports a warning and continues executing the current operation.
+
+```
+check "health_check" {
+  data "http" "terraform_io" {
+    url = "https://www.terraform.io"
+  }
+
+  assert {
+    condition = data.http.terraform_io.status_code == 200
+    error_message = "${data.http.terraform_io.url} returned an unhealthy status code"
+  }
+}
+
+```
