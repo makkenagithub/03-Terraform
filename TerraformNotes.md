@@ -406,3 +406,33 @@ check "health_check" {
 }
 
 ```
+
+
+### Major use of Terraform Lint
+
+Terraform Lint (commonly done using TFLint) is used to:
+
+✅ Detect syntax errors and misconfigurations
+✅ Enforce best practices in Terraform code
+✅ Identify unused variables/resources
+✅ Ensure provider-specific rules are followed
+✅ Improve code quality and consistency
+
+
+### What is Terraform Drift
+
+In Terraform, drift occurs when:
+
+The actual infrastructure differs from the state defined in Terraform configuration.
+
+🔹 Causes:
+Manual changes in cloud console (e.g., AWS, Azure)
+Changes by other tools or scripts
+🔹 Example:
+You define an EC2 instance as t2.micro
+Someone manually changes it to t2.large
+
+👉 Now Terraform state ≠ real infrastructure → Drift
+
+
+
